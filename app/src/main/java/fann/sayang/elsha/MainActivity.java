@@ -19,6 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Base64;
 
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
@@ -60,12 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         ivCopy.setOnClickListener(v -> {
             String url = tvUrl.getText().toString();
-            if (!url.isEmpty() && isValidUrl(url)) {
+            if (!url.isEmpty()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Copied URL", url);
                 clipboard.setPrimaryClip(clip);
-            } else {
-                Toast.makeText(this, "Tidak ada URL untuk disalin.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(browserIntent);
             } else {
-                Toast.makeText(this, "URL tidak valid atau kosong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "URL tidak valid.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_QR_SCAN) {
             if (resultCode == RESULT_OK && data != null){
                 String scannedData = data.getStringExtra("SCAN_RESULT");
-                String processedUrl = processBase64Stringa(scannedData);
+                String processedUrl = processBase64String(scannedData);
                 tvUrl.setText(processedUrl);
                 // Toast.makeText(this, "Hasil QR Code:" + scannedData, Toast.LENGTH_LONG).show();
             } else {
@@ -98,11 +100,34 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK && data != null) {
                 // Toast.makeText(this, "proceed", Toast.LENGTH_SHORT).show();
                 Uri scannedData = data.getData();
-                decodeQRCodeFromImage(scannedData);
+                //decodeQRCodeFromImage(scannedData);
+                processImage(scannedData);
             } else {
                 tvUrl.setText("Kamu tidak memilih gambar apapun.");
                 // Toast.makeText(this, "Kamu tidak memilih gambar apapun.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void processImage(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            InputImage image = InputImage.fromBitmap(bitmap, 0);
+
+            BarcodeScanner scanner = BarcodeScanning.getClient();
+            scanner.process(image)
+                    .addOnSuccessListener(barcodes -> {
+                        for (Barcode barcode : barcodes) {
+                            String qrData = barcode.getRawValue();
+                            String processed = processBase64String(qrData);
+                            tvUrl.setText(processed);
+                        }
+                    })
+                    .addOnFailureListener(Throwable::printStackTrace);
+        } catch (Exception e) {
+            e.printStackTrace();
+            tvUrl.setText("Gagal melakukan scan.");
         }
     }
 
@@ -126,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             Reader reader = new QRCodeReader();
             Result result = reader.decode(binaryBitmap);
 
-            String processedUrl = processBase64Stringa(result.getText());
+            String processedUrl = processBase64String(result.getText());
             tvUrl.setText(processedUrl);
             // Toast.makeText(this, "Hasil QR Code:" + result.getText(), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
@@ -134,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String processBase64Stringa(String encodedString) {
+    private String processBase64String(String encodedString) {
         String decodedString = encodedString;
-        int maxAttempts = 100;
+        int maxAttempts = 999;
 
         for (int i = 0; i < maxAttempts; i++) {
             try {
@@ -149,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        return "Tidak menemukan URL setelah melakukan 100 percobaan.";
+        return "- " + encodedString;
     }
 
     private boolean isValidUrl(String url) {
