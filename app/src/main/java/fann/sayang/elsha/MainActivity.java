@@ -1,13 +1,18 @@
 package fann.sayang.elsha;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -27,15 +32,23 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CaptureActivity;
+import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.journeyapps.barcodescanner.camera.CameraSettings;
 
 import java.io.InputStream;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvUrl;
+    private DecoratedBarcodeView barcodeView;
+    private static final int CAMERA_PERMISSION_REQUEST = 100;
     private static final int REQUEST_CODE_QR_SCAN = 101;
     private static final int REQUEST_CODE_IMAGE_PICK = 102;
 
@@ -53,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         Button btnPickImage = findViewById(R.id.btn_pick_image);
 
         btnScanQR.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CaptureActivity.class);
+//            Intent intent = new Intent(this, CaptureActivity.class);
+//            startActivityForResult(intent, REQUEST_CODE_QR_SCAN);
+            Intent intent = new Intent(this, MLKitCaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE_QR_SCAN);
         });
 
@@ -131,6 +146,76 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void startCamera() {
+        setContentView(R.layout.decoratedbarcodeview);
+        barcodeView = findViewById(R.id.barcode_scanner);
+
+        if (barcodeView != null) {
+            CameraSettings cameraSettings = barcodeView.getBarcodeView().getCameraSettings();
+            //cameraSettings.setAutoFocusEnabled(true);
+            //cameraSettings.setContinuousFocusEnabled(true);
+            cameraSettings.setRequestedCameraId(0);
+
+            barcodeView.getBarcodeView().setCameraSettings(cameraSettings);
+
+            barcodeView.decodeContinuous(new BarcodeCallback() {
+                @Override
+                public void barcodeResult(BarcodeResult result) {
+                    String processed = processBase64String(result.getText());
+                    tvUrl.setText(processed);
+                }
+
+                @Override
+                public void possibleResultPoints(List<ResultPoint> resultPoints) {
+
+                }
+            });
+
+            if (!hasCameraPermission()) {
+                requestCameraPermission();
+            } else {
+                barcodeView.resume();
+            }
+        } else {
+            tvUrl.setText("Error barcode.");
+        }
+        setContentView(R.layout.activity_main);
+    }
+
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.CAMERA }, CAMERA_PERMISSION_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                barcodeView.resume();
+            } else {
+                tvUrl.setText("Izin kamera dibutuhkan untuk melakukan scan.");
+            }
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (barcodeView != null) {
+            barcodeView.pause();
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (barcodeView != null) {
+            barcodeView.resume();
+        }
+    }
+
     private void decodeQRCodeFromImage(Uri imageUri) {
         try (InputStream inputStream = getContentResolver().openInputStream(imageUri)){
             if (inputStream == null) {
@@ -174,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        return "- " + encodedString;
+        return encodedString;
     }
 
     private boolean isValidUrl(String url) {
