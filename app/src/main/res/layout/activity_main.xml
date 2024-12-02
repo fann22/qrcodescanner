@@ -7,7 +7,6 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#101010"
@@ -19,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="made with ❤ by Irfan"
+            android:text="made with ♥️ by Irfan"
             android:textColor="#fff"
             android:textSize="10sp"
             app:fontFamily="monospace" />
@@ -28,7 +27,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dibuat dengan ❤ oleh Irfan"
+            android:text="dibuat dengan ♥️ oleh Irfan"
             android:textColor="#fff"
             android:textSize="10sp"
             app:fontFamily="monospace" />
@@ -43,7 +42,6 @@
         tools:layout_editor_absoluteY="-27dp">
 
         <LinearLayout
-            android:id="@+id/url_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -76,7 +74,7 @@
                     android:id="@+id/iv_copy"
                     android:layout_width="28dp"
                     android:layout_height="32dp"
-                    android:layout_marginEnd="14dp"
+                    android:layout_marginEnd="15dp"
                     android:clickable="true"
                     android:contentDescription="Copy URL"
                     android:focusable="true"
@@ -89,7 +87,7 @@
                     android:layout_width="27dp"
                     android:layout_height="27dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="28dp"
                     android:clickable="true"
                     android:contentDescription="Open URL"
                     android:focusable="true"
@@ -112,7 +110,7 @@
             android:text="Ambil gambar dari galeri" />
 
         <ImageView
-            android:id="@+id/sourceCode"
+            android:id="@+id/source_code"
             android:layout_width="115dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
