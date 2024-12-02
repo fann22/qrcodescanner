@@ -1,16 +1,18 @@
-package com.journeyapps.barcodescanner;
+package fann.sayang.elsha;
 
-import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import android.view.KeyEvent;
 
 import com.google.zxing.client.android.R;
+import com.journeyapps.barcodescanner.CaptureActivity;
+import com.journeyapps.barcodescanner.CaptureManager;
+import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 /**
  *
  */
-public class CaptureActivity extends Activity {
+public class NewCaptureActivity extends CaptureActivity {
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
 

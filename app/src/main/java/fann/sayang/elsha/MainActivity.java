@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnPickImage = findViewById(R.id.btn_pick_image);
 
         btnScanQR.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CaptureActivity.class);
+            Intent intent = new Intent(this, NewCaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE_QR_SCAN);
         });
 
@@ -122,7 +122,10 @@ public class MainActivity extends AppCompatActivity {
                             tvUrl.setText(processed);
                         }
                     })
-                    .addOnFailureListener(Throwable::printStackTrace);
+                    .addOnFailureListener(e -> {
+                       e.printStackTrace();
+                       tvUrl.setText(e.toString());
+                    });
         } catch (Exception e) {
             e.printStackTrace();
             tvUrl.setText("Gagal melakukan scan.");

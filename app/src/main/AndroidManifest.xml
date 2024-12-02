@@ -22,17 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+        <activity android:name=".NewCaptureActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"
             tools:replace="android:screenOrientation, android:theme"
             android:exported="true"/>
-        <activity android:name=".MLKitCaptureActivity"
-            android:screenOrientation="portrait"
-            tools:replace="android:screenOrientation, android:theme"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:exported="true"/>
-
     </application>
 
 </manifest>

@@ -7,92 +7,10 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/url_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/rounded_background"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_scan_qr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/tv_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:padding="16dp"
-            android:text="URL akan muncul disini"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/iv_copy"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="8dp"
-                android:clickable="true"
-                android:contentDescription="Copy URL"
-                android:focusable="true"
-                android:src="?attr/actionModeCopyDrawable"
-                app:tint="#FFFFFF"
-                tools:ignore="UseAppTint,TouchTargetSizeCheck" />
-
-            <ImageView
-                android:id="@+id/iv_open"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:clickable="true"
-                android:contentDescription="Open URL"
-                android:focusable="true"
-                android:src="@drawable/ic_openin"
-                app:tint="#FFFFFF"
-                tools:ignore="UseAppTint,TouchTargetSizeCheck" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_scan_qr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan QR Code"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
-
-    <Button
-        android:id="@+id/btn_pick_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ambil gambar dari galeri"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.691" />
-
-    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#101010"
-        android:layout_marginBottom="0dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,19 +19,106 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#fff"
             android:text="made with ❤ by Irfan"
+            android:textColor="#fff"
+            android:textSize="10sp"
             app:fontFamily="monospace" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#fff"
             android:text="dibuat dengan ❤ oleh Irfan"
+            android:textColor="#fff"
+            android:textSize="10sp"
             app:fontFamily="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-27dp">
+
+        <LinearLayout
+            android:id="@+id/url_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="90dp"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:padding="16dp"
+                android:text="URL akan muncul disini"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/iv_copy"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="14dp"
+                    android:clickable="true"
+                    android:contentDescription="Copy URL"
+                    android:focusable="true"
+                    android:src="?attr/actionModeCopyDrawable"
+                    app:tint="#FFFFFF"
+                    tools:ignore="UseAppTint,TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/iv_open"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="32dp"
+                    android:clickable="true"
+                    android:contentDescription="Open URL"
+                    android:focusable="true"
+                    android:src="@drawable/ic_openin"
+                    app:tint="#FFFFFF"
+                    tools:ignore="UseAppTint,TouchTargetSizeCheck" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_scan_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan QR Code" />
+
+        <Button
+            android:id="@+id/btn_pick_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ambil gambar dari galeri" />
+
+        <ImageView
+            android:id="@+id/sourceCode"
+            android:layout_width="115dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/ic_source_code" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
