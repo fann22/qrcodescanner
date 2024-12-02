@@ -2,15 +2,28 @@
     <!-- Base application theme. -->
     <style name="Theme.QRScanner" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">#1E3A8A</item> <!-- Dark Blue -->
+        <item name="colorPrimaryVariant">#162447</item> <!-- Deeper Dark Blue -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- White for contrast -->
+
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">#2A9D8F</item> <!-- Teal -->
+        <item name="colorSecondaryVariant">#264653</item> <!-- Dark Teal -->
+        <item name="colorOnSecondary">#FFFFFF</item> <!-- White for contrast -->
+
+        <!-- Background and surface colors. -->
+        <item name="colorBackground">#121212</item> <!-- Very Dark Gray -->
+        <item name="colorSurface">#1E1E1E</item> <!-- Dark Gray -->
+        <item name="colorOnBackground">#E0E0E0</item> <!-- Light Gray for text -->
+        <item name="colorOnSurface">#FFFFFF</item> <!-- White -->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Error color. -->
+        <item name="colorError">#E63946</item> <!-- Soft Red -->
+        <item name="colorOnError">#FFFFFF</item> <!-- White for contrast -->
+
         <!-- Customize your theme here. -->
     </style>
 </resources>
